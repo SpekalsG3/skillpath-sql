@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+            http://www.liquibase.org/xml/ns/dbchangelog-ext
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="v0.0.5" author="spekalsg3">
+        <tagDatabase tag="v0.0.5" />
+    </changeSet>
+    <changeSet id="2021-04-03-03-add-table-with-associations" author="spekalsg3">
+        <preConditions onFail="HALT">
+            <not>
+                <tableExists tableName="skill_associations"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="skill_associations">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="first_skill_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_first_skill_id" references="skills(id)"/>
+            </column>
+            <column name="second_skill_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_second_skill_id" references="skills(id)"/>
+            </column>
+            <column name="count" type="text" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="skill_associations"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

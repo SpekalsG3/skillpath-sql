@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+            http://www.liquibase.org/xml/ns/dbchangelog-ext
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="v0.0.1" author="spekalsg3">
+        <tagDatabase tag="v0.0.1" />
+    </changeSet>
+    <changeSet id="2021-03-22-initiate-database" author="spekalsg3">
+        <preConditions onFail="HALT">
+            <not>
+                <and>
+                    <tableExists tableName="loans_by_period_report"/>
+                    <tableExists tableName="loans_by_status_report"/>
+                </and>
+            </not>
+        </preConditions>
+
+        <createTable tableName="specializations">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="title" type="text"/>
+        </createTable>
+
+        <createTable tableName="skills">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="title" type="text"/>
+            <column name="specialization_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_specialization_id" references="specializations(id)"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="sources">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="title" type="text"/>
+            <column name="api_url" type="text"/>
+        </createTable>
+
+        <createTable tableName="fetched_skills">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="skill_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_skill_id" references="skills(id)"/>
+            </column>
+            <column name="source_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_source_id" references="sources(id)"/>
+            </column>
+            <column name="count" type="text" defaultValue="0"/>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="specializations"/>
+            <dropTable tableName="skills"/>
+            <dropTable tableName="sources"/>
+            <dropTable tableName="fetched_skills"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

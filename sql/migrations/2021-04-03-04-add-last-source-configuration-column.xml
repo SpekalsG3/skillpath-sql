@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+            http://www.liquibase.org/xml/ns/dbchangelog-ext
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="v0.0.6" author="spekalsg3">
+        <tagDatabase tag="v0.0.6" />
+    </changeSet>
+    <changeSet id="2021-04-03-04-add-last-source-configuration-column" author="spekalsg3">
+        <preConditions onFail="HALT">
+            <and>
+                <tableExists tableName="sources"/>
+                <not>
+                    <and>
+                        <columnExists tableName="sources" columnName="last_config"/>
+                        <columnExists tableName="sources" columnName="default_config"/>
+                    </and>
+                </not>
+            </and>
+        </preConditions>
+
+        <addColumn tableName="sources">
+            <column name="last_config" type="json"/>
+            <column name="default_config" type="json" defaultValue="{}"/>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="sources" columnName="last_config"/>
+            <dropColumn tableName="sources" columnName="default_config"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

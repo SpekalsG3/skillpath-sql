@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+            http://www.liquibase.org/xml/ns/dbchangelog-ext
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="v0.0.3" author="spekalsg3">
+        <tagDatabase tag="v0.0.3" />
+    </changeSet>
+    <changeSet id="2021-04-03-add-table-with-skill-synonyms" author="spekalsg3">
+        <preConditions onFail="HALT">
+            <and>
+                <columnExists tableName="skills" columnName="specialization_id"/>
+                <not>
+                    <tableExists tableName="skill_specializations"/>
+                </not>
+            </and>
+        </preConditions>
+
+        <dropColumn tableName="skills" columnName="specialization_id"/>
+
+        <createTable tableName="skill_specializations">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="skill_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_skill_id" references="skills(id)"/>
+            </column>
+            <column name="specialization_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_spec_id" references="specializations(id)"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <addColumn tableName="skills">
+                <column name="specialization_id" type="bigint">
+                    <constraints nullable="false" foreignKeyName="fk_specialization_id" references="specializations(id)"/>
+                </column>
+            </addColumn>
+
+            <dropTable tableName="skill_specializations"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+            http://www.liquibase.org/xml/ns/dbchangelog-ext
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+  <include file="./sql/migrations/2021-03-23-add-is-enabled-column-to-sources.xml"/>
+  <include file="./sql/migrations/2021-04-03-01-add-table-with-skill-specializations.xml"/>
+  <include file="./sql/migrations/2021-04-03-02-add-table-with-skill-synonyms.xml"/>
+  <include file="./sql/migrations/2021-04-03-03-add-table-with-associations.xml"/>
+  <include file="./sql/migrations/2021-04-03-04-add-last-source-configuration-column.xml"/>
+  <include file="./sql/migrations/2021-04-04-add-is-enabled-column-to-skills.xml"/>
+</databaseChangeLog>

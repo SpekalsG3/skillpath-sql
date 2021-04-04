@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+            http://www.liquibase.org/xml/ns/dbchangelog-ext
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="v0.0.7" author="spekalsg3">
+        <tagDatabase tag="v0.0.7" />
+    </changeSet>
+    <changeSet id="2021-04-04-add-is-enabled-column-to-skills" author="spekalsg3">
+        <preConditions onFail="HALT">
+            <and>
+                <tableExists tableName="skills"/>
+                <not>
+                    <columnExists tableName="skills" columnName="is_enabled"/>
+                </not>
+            </and>
+        </preConditions>
+
+        <addColumn tableName="skills">
+            <column name="is_enabled" type="boolean" defaultValue="true"/>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="skills" columnName="is_enabled"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

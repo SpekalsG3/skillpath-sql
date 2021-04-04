@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+            http://www.liquibase.org/xml/ns/dbchangelog-ext
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="v0.0.2" author="spekalsg3">
+        <tagDatabase tag="v0.0.2" />
+    </changeSet>
+    <changeSet id="2021-03-23-add-is-enabled-column-to-sources" author="spekalsg3">
+        <preConditions onFail="HALT">
+            <and>
+                <tableExists tableName="sources"/>
+                <not>
+                    <columnExists tableName="sources" columnName="is_enabled"/>
+                </not>
+            </and>
+        </preConditions>
+
+        <addColumn tableName="sources">
+            <column name="is_enabled" type="boolean" defaultValue="true"/>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="sources" columnName="is_enabled"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
