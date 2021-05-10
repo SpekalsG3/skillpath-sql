@@ -14,4 +14,5 @@
   <include file="./sql/migrations/2021-04-03-03-add-table-with-associations.xml"/>
   <include file="./sql/migrations/2021-04-03-04-add-last-source-configuration-column.xml"/>
   <include file="./sql/migrations/2021-04-04-add-is-enabled-column-to-skills.xml"/>
+  <include file="./sql/migrations/2021-04-20-add-table-with-users.xml"/>
 </databaseChangeLog>

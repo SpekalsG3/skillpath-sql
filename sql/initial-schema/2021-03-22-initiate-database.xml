@@ -56,7 +56,7 @@
             <column name="source_id" type="bigint">
                 <constraints nullable="false" foreignKeyName="fk_source_id" references="sources(id)"/>
             </column>
-            <column name="count" type="text" defaultValue="0"/>
+            <column name="count" type="bigint" defaultValue="0"/>
         </createTable>
 
         <rollback>
