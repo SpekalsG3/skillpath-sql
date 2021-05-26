@@ -15,4 +15,6 @@
   <include file="./sql/migrations/2021-04-03-04-add-last-source-configuration-column.xml"/>
   <include file="./sql/migrations/2021-04-04-add-is-enabled-column-to-skills.xml"/>
   <include file="./sql/migrations/2021-04-20-add-table-with-users.xml"/>
+  <include file="./sql/migrations/2021-05-10-cast-count-column-to-integer.xml"/>
+  <include file="./sql/migrations/2021-05-16-add-table-with-user-preferences.xml"/>
 </databaseChangeLog>

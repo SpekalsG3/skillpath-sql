@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+            http://www.liquibase.org/xml/ns/dbchangelog-ext
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="v0.1.1" author="spekalsg3">
+        <tagDatabase tag="v0.1.1" />
+    </changeSet>
+    <changeSet id="2021-05-10-cast-count-column-to-integer" author="spekalsg3">
+        <preConditions onFail="HALT">
+            <and>
+                <tableExists tableName="skill_associations"/>
+                <columnExists tableName="skill_associations" columnName="count"/>
+            </and>
+        </preConditions>
+
+        <dropDefaultValue tableName="skill_associations" columnName="count" columnDataType="text"/>
+        <modifyDataType tableName="skill_associations" columnName="count" newDataType="bigint"/>
+        <addDefaultValue
+            tableName="skill_associations"
+            columnName="count"
+            columnDataType="bigint"
+            defaultValueNumeric="0"
+        />
+
+        <rollback>
+            <dropDefaultValue tableName="skill_associations" columnName="count" columnDataType="bigint"/>
+            <modifyDataType tableName="skill_associations" columnName="count" newDataType="text"/>
+            <addDefaultValue
+                tableName="skill_associations"
+                columnName="count"
+                columnDataType="text"
+                defaultValueNumeric="0"
+            />
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
